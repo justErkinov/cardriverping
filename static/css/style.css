@@ -1,0 +1,52 @@
+:root {
+    --primary: #2c3e50;
+    --secondary: #3498db;
+    --accent: #e74c3c;
+    --light: #ecf0f1;
+    --dark: #2c3e50;
+    --gray: #95a5a6;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: var(--dark);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.navbar-brand { font-weight: 700; display: flex; gap: 10px; align-items: center; }
+.navbar-brand i { color: var(--accent); }
+.nav-link:hover { color: var(--accent) !important; }
+
+.btn-primary { background: var(--accent); border-color: var(--accent); }
+.btn-primary:hover { background: #c0392b; border-color: #c0392b; }
+
+.hero-section { padding: 100px 0; background: #f8f9fa; }
+.search-box { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+
+.car-input { display: flex; gap: 10px; }
+.car-input input { padding: 15px; border: 2px solid var(--gray); border-radius: 8px; }
+.car-input input:focus { border-color: var(--secondary); }
+
+.feature-card { background: var(--light); padding: 30px; border-radius: 12px; text-align: center; transition: 0.3s; }
+.feature-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+.feature-icon { width: 70px; height: 70px; background: var(--secondary); border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.8rem; }
+
+.download-section { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; }
+.badge { background: #fff; color: var(--primary); padding: 12px 25px; border-radius: 8px; font-weight: 600; display: flex; gap: 10px; align-items: center; cursor: pointer; transition: 0.3s; }
+.badge:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+.car-owner-info { background: #fff; padding: 20px; border-radius: 8px; margin-top: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: none; }
+.user-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--secondary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; margin-right: 15px; }
+.contact-buttons { display: flex; gap: 10px; }
+
+footer { background: var(--dark); color: #fff; }
+
+@media (max-width: 768px) {
+    .car-input { flex-direction: column; }
+    .hero-section { padding: 60px 0; }
+}
