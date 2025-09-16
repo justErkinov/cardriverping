@@ -46,36 +46,43 @@
                 <div class="col-lg-8 text-center">
                     <h1 class="mb-4">Mashina egasi bilan tez va oson bog'laning</h1>
                     <p class="lead mb-5">Noto'g'ri parkovka, yo'lni to'sib qo'yish yoki favqulodda holatlarda mashina egasiga xabar yuboring</p>
-                    
+                    {{ DEBUG_MARKER }}
                     <div class="search-box">
                         <h2 class="mb-4">Mashina raqamini kiriting</h2>
-                        <div class="car-input mb-3">
-                            <input type="text" id="carNumber" class="form-control" placeholder="Masalan, 30 A 123 AA">
-                            <button class="btn btn-primary" onclick="searchCar()">Xabar yuborish</button>
-                        </div>
+                            <form method="post" action="">
+                                {% csrf_token %}
+                                <input type="text" name="carNumber" class="form-control" placeholder="Masalan, 30 A 123 AA" value="{{ entered_plate|default:'' }}">
+                                <button class="btn btn-primary" type="submit">Xabar yuborish</button>
+                            </form>
                         <p class="text-muted">Misol: 01 A 123 AA, 10 B 456 BA, 30 C 789 CC</p>
-                        
-                        <!-- Car owner information -->
-                        <div class="car-owner-info" id="carOwnerInfo">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="user-avatar" id="userAvatar">AS</div>
-                                <div>
-                                    <h4 id="ownerName">Azizbek Samijonov</h4>
-                                    <p class="mb-1" id="carModel">Mashina: Chevrolet Malibu</p>
-                                    <p class="mb-0" id="carYear">Yili: 2022</p>
+                        {% if vehicle %}
+                            <div class="car-owner-info">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="user-avatar">
+                                        {{ vehicle.owner.first_name|slice:":1" }}{{ vehicle.owner.last_name|slice:":1" }}
+                                    </div>
+                                    <div>
+                                        <h4>
+                                            {% if vehicle.owner.first_name or vehicle.owner.last_name %}
+                                                {{ vehicle.owner.first_name }} {{ vehicle.owner.last_name }}
+                                            {% else %}
+                                                {{ vehicle.owner.username }}
+                                            {% endif %}
+                                        </h4>
+                                        <p class="mb-1">Mashina: {{ vehicle.vehicle_brand }} {{ vehicle.vehicle_model }}</p>
+                                        <p class="mb-0">Rangi: {{ vehicle.vehicle_color }}</p>
+                                    </div>
                                 </div>
                             </div>
-                            <p class="mb-3">Mashina egasi sizning xabaringizni qabul qilishga rozi. Quyidagi usullar bilan bog'lanishingiz mumkin:</p>
-                            <div class="contact-buttons">
-                                <button class="btn btn-outline-primary"><i class="fas fa-comment me-2"></i>Xabar yuborish</button>
-                                <button class="btn btn-outline-success"><i class="fas fa-phone me-2"></i>Qo'ng'iroq qilish</button>
-                            </div>
-                        </div>
-                    </div>
+                        {% elif entered_plate %}
+                            <p style="color: red;">Bunday mashina topilmadi</p>
+                        {% endif %}
+                    </div> <!-- 🔴 search-box yopildi -->
                 </div>
             </div>
         </div>
     </section>
+
 
     <!-- Features -->
     <section class="py-5">
@@ -120,6 +127,5 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

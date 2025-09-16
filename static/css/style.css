@@ -40,7 +40,7 @@ body {
 .badge { background: #fff; color: var(--primary); padding: 12px 25px; border-radius: 8px; font-weight: 600; display: flex; gap: 10px; align-items: center; cursor: pointer; transition: 0.3s; }
 .badge:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
-.car-owner-info { background: #fff; padding: 20px; border-radius: 8px; margin-top: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: none; }
+.car-owner-info { background: #fff; padding: 20px; border-radius: 8px; margin-top: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1)}
 .user-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--secondary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; margin-right: 15px; }
 .contact-buttons { display: flex; gap: 10px; }
 

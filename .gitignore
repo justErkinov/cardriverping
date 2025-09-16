@@ -1,2 +1,39 @@
-.myenv/
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Django
+*.log
+*.pot
+*.pyc
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+.env
+
+# VSCode
+.vscode/
+
+# Environments
+venv/
+env/
+ENV/
 .venv/
+
+# Pytest
+.coverage
+.tox/
+.pytest_cache/
+
+# OS files
+.DS_Store
+Thumbs.db
