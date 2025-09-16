@@ -24,6 +24,7 @@ staticfiles/
 .vscode/
 
 # Environments
+myenv/
 venv/
 env/
 ENV/
