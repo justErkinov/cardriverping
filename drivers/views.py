@@ -1,15 +1,16 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, mixins
 from django.contrib import messages
 
 from .models import Vehicle, CustomUser
-from .forms import PhoneLoginForm  
+from .forms import PhoneLoginForm, RegistrationForm 
 import re
 
 
-class IdentifyVehicleView(View):
+class IdentifyVehicleView(mixins.LoginRequiredMixin, View):
     template_name = 'index.html'
+    login_url = '/'
 
     def get(self, request):
         return render(request, self.template_name)
@@ -36,8 +37,7 @@ class IdentifyVehicleView(View):
         })
 
 
-#Password orqali login qilish 
-class PhoneLoginView(View):
+class UserLoginView(View):
     template_name = 'login.html' 
 
     def get(self, request):
@@ -50,18 +50,31 @@ class PhoneLoginView(View):
             username = form.cleaned_data['username']  
             password = form.cleaned_data['password'] 
             phone_number = form.cleaned_data['phone_number']  
-
         
             user = authenticate(request, username=username, password=password)
-
-            if user is not None:
-                if user.phone_number == phone_number:
-                    login(request, user)  
-                    messages.success(request, "Muvaffaqiyatli tizimga kirdingiz!")
-                    return redirect('/')  
-                else:
-                    messages.error(request, "Telefon raqam noto‘g‘ri.")
-            else:
-                messages.error(request, "Username yoki parol noto‘g‘ri.")
+            
+            if user and getattr(user, "phone_number", None) == phone_number:
+                login(request, user)  
+                messages.success(request, "Muvaffaqiyatli tizimga kirdingiz!")
+                return redirect('/search/')  
+            messages.error(request, "Foydalanuvchi nomi, parol yoki telefon raqam noto'g'ri.")
 
         return render(request, "login.html", {"form": form})
+    
+
+class UserRegistrationView(View):
+    template_name = 'registration.html'
+
+    def get(self, request):
+        form = RegistrationForm()
+        return render(request, self.template_name, {"form": form})
+    
+    def post(self, request):
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.save()
+            login(request, user)
+            messages.success(request, "Ro'yxatdan muvaffaqiyatli o'tdingiz.")
+            return redirect('/')
+        return render(request, self.template_name, {'form': form})

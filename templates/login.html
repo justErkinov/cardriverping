@@ -1,24 +1,45 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="uz">
 <head>
     <meta charset="utf-8">
-    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kirish</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h2>Telefon bilan login</h2>
+<body class="bg-light">
 
-    {% if messages %}
-        <ul>
-            {% for msg in messages %}
-                <li>{{ msg }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card mt-5 shadow-sm">
+                <div class="card-body">
+                    <h3 class="text-center mb-4">Kirish</h3>
 
-    <form method="post" action="{% url 'phone_login' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Kirish</button>
-    </form>
+                    {% if messages %}
+                        {% for msg in messages %}
+                            <div class="alert alert-warning">{{ msg }}</div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary w-100">Kirish</button>
+                    </form>
+
+                    <p class="text-center mt-3">
+                        Hali hisobingiz yo‘qmi?
+                        <a href="{% url 'registration' %}">Ro‘yxatdan o‘ting</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
