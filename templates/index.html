@@ -32,16 +32,23 @@
                     <li class="nav-item"><a class="nav-link" href="#">Yuklab olish</a></li>
                 </ul>
                 {% if request.user.is_authenticated %}
-                <div class="d-flex">
-                    <a href="#"><button class="btn btn-outline-light me-2">{{ user.username }}</button></a>
-                    <a href="#"><button class="btn btn-primary">Hisobdan chiqish</button></a>
-                </div>
+                    <div class="d-flex">
+                        <a href="#"><button class="btn btn-outline-light me-2">{{ user.username }}</button></a>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Hisobdan chiqish</button>
+                        </form>
+                    </div>
                 {% else %}
-                <div class="d-flex">
-                    <a href="{% url 'login' %}"><button class="btn btn-outline-light me-2">Kirish</button></a>
-                    <a href="{% url 'registration' %}"><button class="btn btn-primary">Ro'yxatdan o'tish</button></a>
-                </div>
+                    <div class="d-flex">
+                        <a href="{% url 'login' %}"><button class="btn btn-outline-light me-2">Kirish</button></a>
+                        <a href="{% url 'registration' %}"><button class="btn btn-primary">Ro'yxatdan o'tish</button></a>
+                    </div>
                 {% endif %}
+
+
+
+                    
             </div>
         </div>
     </nav>
