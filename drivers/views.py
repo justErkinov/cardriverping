@@ -7,7 +7,7 @@ from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy
 
 from .models import Vehicle, CustomUser
-from .forms import PhoneLoginForm, RegistrationForm 
+from .forms import PhoneLoginForm, RegistrationForm, ExtraFieldsForm
 import re
 
 
@@ -84,5 +84,23 @@ class UserRegistrationView(View):
             user.save()
             login(request, user)
             messages.success(request, "Ro'yxatdan muvaffaqiyatli o'tdingiz.")
+            return redirect('/vehicle_register/')
+        return render(request, self.template_name, {'form': form})
+
+
+class VehicleRegistrationView(View):
+    template_name = 'filling_extra_fields.html'
+
+    def get(self, request):
+        form = ExtraFieldsForm()
+        return render(request, self.template_name, {"form": form})
+    
+    def post(self, request):
+        form = ExtraFieldsForm(request.POST, request.FILES)
+        if form.is_valid():
+            vehicle = form.save(commit=False)
+            vehicle.owner = request.user
+            vehicle.save()
+            messages.success(request, "Avtomobil ro'yxatdan o'tdi.")
             return redirect('/')
         return render(request, self.template_name, {'form': form})

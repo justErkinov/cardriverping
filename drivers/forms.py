@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import CustomUser
+from .models import CustomUser, Vehicle
 
 
 class PhoneLoginForm(forms.Form):    
@@ -24,3 +24,10 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ("username", "phone_number", "password1", "password2")
+
+
+class ExtraFieldsForm(forms.ModelForm):
+    class Meta:
+        model = Vehicle
+        fields = ("owner", "vehicle_picture", "vehicle_brand", "vehicle_model", "vehicle_color", "vehicle_number")
+        exclude = ("owner", )
