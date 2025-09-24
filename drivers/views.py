@@ -3,11 +3,19 @@ from django.views import View
 from django.contrib.auth import authenticate, login, mixins
 from django.contrib import messages
 
+from django.contrib.auth.views import LogoutView
+from django.urls import reverse_lazy
+
 from .models import Vehicle, CustomUser
 from .forms import PhoneLoginForm, RegistrationForm 
 import re
 
 
+
+class CustomLogoutView(LogoutView):
+    next_page = reverse_lazy('login')
+
+    
 class IdentifyVehicleView(mixins.LoginRequiredMixin, View):
     template_name = 'index.html'
     login_url = '/'
