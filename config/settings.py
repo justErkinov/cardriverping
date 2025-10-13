@@ -133,3 +133,71 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+""" Logging """
+# settings.py
+
+import os
+import logging
+import logging.config
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    # Formatlar
+    'formatters': {
+        'verbose': {
+            'format': '[{asctime}] {levelname} {name} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+
+    # Handlers
+    'handlers': {
+        'rotating_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'project.log'),
+            'maxBytes': 5*1024*1024,
+            'backupCount': 5,
+            'formatter': 'verbose',
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'project.log'),
+            'formatter': 'verbose',
+        },
+        'error_file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'errors.log'),
+            'formatter': 'verbose',
+        },
+    },
+
+    # Loggers
+    'loggers': {
+        'django': {
+            'handlers': ['rotating_file', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['rotating_file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'accounts': { 
+            'handlers': ['rotating_file', 'file', 'error_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    }
+}
