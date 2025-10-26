@@ -27,9 +27,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link active" href="#">Bosh sahifa</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Xususiyatlar</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" href="#">Xususiyatlar</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Qanday ishlaydi</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Yuklab olish</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Yuklab olish</a></li> -->
                 </ul>
                 {% if request.user.is_authenticated %}
                     <div class="d-flex">
@@ -60,13 +60,12 @@
                 <div class="col-lg-8 text-center">
                     <h1 class="mb-4">Mashina egasi bilan tez va oson bog'laning</h1>
                     <p class="lead mb-5">Noto'g'ri parkovka, yo'lni to'sib qo'yish yoki favqulodda holatlarda mashina egasiga xabar yuboring</p>
-                    {{ DEBUG_MARKER }}
                     <div class="search-box">
                         <h2 class="mb-4">Mashina raqamini kiriting</h2>
                             <form method="post" action="">
                                 {% csrf_token %}
                                 <input type="text" name="carNumber" class="form-control" placeholder="Masalan, 30 A 123 AA" value="{{ entered_plate|default:'' }}">
-                                <button class="btn btn-primary" type="submit">Xabar yuborish</button>
+                                <button class="btn btn-primary" type="submit">Qidirish</button>
                             </form>
                         <p class="text-muted">Misol: 01 A 123 AA, 10 B 456 BA, 30 C 789 CC</p>
                         {% if vehicle %}
@@ -84,7 +83,8 @@
                                             {% endif %}
                                         </h4>
                                         <p class="mb-1">Mashina: {{ vehicle.vehicle_brand }} {{ vehicle.vehicle_model }}</p>
-                                        <p class="mb-0">Rangi: {{ vehicle.vehicle_color }}</p>
+                                        <p class="mb-1">Rangi: {{ vehicle.vehicle_color }}</p>
+                                        <p class="mb-1">Telefon raqam: {{ vehicle.owner.phone_number }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -106,16 +106,16 @@
                 <p class="lead">Bizning platformamiz orqali siz mashina egasiga tez va xavfsiz bog'lanishingiz mumkin</p>
             </div>
             
-            <div class="row g-4">
+            <!-- <div class="row g-4">
                 <div class="col-md-4"><div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3>Maxfiylik</h3><p>Shaxsiy ma'lumotlar ko‘rsatilmaydi, faqat xabar yuborish mumkin</p></div></div>
                 <div class="col-md-4"><div class="feature-card"><div class="feature-icon"><i class="fas fa-bolt"></i></div><h3>Tezkor</h3><p>Xabar push, SMS yoki Telegram orqali yuboriladi</p></div></div>
                 <div class="col-md-4"><div class="feature-card"><div class="feature-icon"><i class="fas fa-qrcode"></i></div><h3>QR kod</h3><p>QR kod orqali tezda egasiga xabar yuboring</p></div></div>
             </div>
-        </div>
+        </div> -->
     </section>
 
     <!-- Download -->
-    <section class="download-section py-5 text-center">
+    <!-- <section class="download-section py-5 text-center">
         <div class="container">
             <h2 class="mb-3">Ilovamizni yuklab oling</h2>
             <p class="lead mb-5">AutoPing ilovasini yuklab oling va mashina egasi bilan tezda bog'laning</p>
@@ -125,7 +125,7 @@
                 <div class="badge"><i class="fab fa-telegram"></i><span>Telegram Bot</span></div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Footer -->
     <footer class="py-5">

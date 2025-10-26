@@ -6,15 +6,74 @@
     <meta charset="UTF-8">
     <title>Avtomobil ro‘yxatdan o‘tkazish</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f7fa;
+        }
+        .vehicle-card {
+            max-width: 600px;
+            margin: 60px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 35px 45px;
+        }
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: none;
+        }
+        .btn-primary {
+            width: 100%;
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
-<div class="container mt-5">
-    <h2>Avtomobil ro'yxatdan o'tkazish</h2>
-    <form method="post" action="{% url 'vehicle_registration' %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-primary" type="submit">Ro'yxatdan o'tkazish</button>
-    </form>
+
+<div class="container">
+    <div class="vehicle-card">
+        <h3 class="text-center mb-4">Avtomobil ro'yxatdan o'tkazish</h3>
+
+        {# Xabarlarni chiqarish (success, error va boshqalar) #}
+        {% if messages %}
+        <div class="mb-3">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Yopish"></button>
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'vehicle_registration' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div class="mb-3">
+                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <div class="form-text text-muted">{{ field.help_text }}</div>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="text-danger small">{{ field.errors|striptags }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button class="btn btn-primary mt-3" type="submit">Ro'yxatdan o'tkazish</button>
+        </form>
+
+        <hr class="my-4">
+        <p class="text-center">
+            Bosh sahifaga qaytish uchun 
+            <a href="{% url 'search_car' %}" class="text-decoration-none">shu yerga bosing</a>.
+        </p>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

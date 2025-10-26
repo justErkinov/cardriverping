@@ -6,15 +6,78 @@
     <meta charset="UTF-8">
     <title>Ro‘yxatdan o‘tish</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f5f7fa;
+        }
+        .register-card {
+            max-width: 500px;
+            margin: 60px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 30px 40px;
+        }
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #0d6efd;
+        }
+        .btn-primary {
+            width: 100%;
+            font-weight: 500;
+        }
+        .messages {
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
-<div class="container mt-5">
-    <h2>Ro'yxatdan o'tish</h2>
-    <form method="post" action="{% url 'registration' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-primary" type="submit">Ro'yxatdan o'tish</button>
-    </form>
+
+<div class="container">
+    <div class="register-card">
+        <h3 class="text-center mb-4">Ro'yxatdan o'tish</h3>
+
+        {# Xabarlar (success, error va boshqalar) #}
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Yopish"></button>
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'registration' %}">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div class="mb-3">
+                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <div class="form-text text-muted">{{ field.help_text }}</div>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="text-danger small">
+                            {{ field.errors|striptags }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            
+            <button class="btn btn-primary mt-3" type="submit">Ro'yxatdan o'tish</button>
+        </form>
+
+        <hr class="my-4">
+        <p class="text-center">
+            Hisobingiz bormi? 
+            <a href="{% url 'login' %}" class="text-decoration-none">Tizimga kiring</a>
+        </p>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
